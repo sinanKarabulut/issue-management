@@ -1,5 +1,6 @@
 package com.skbt.issuemanagement.repository;
 
+import com.skbt.issuemanagement.dto.ProjectDto;
 import com.skbt.issuemanagement.entity.Project;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +14,9 @@ public interface ProjectRepository extends JpaRepository<Project,Long> {
 
     List<Project> getAllByProjectCodeAndIdNotNull(String projectCode);
 
-    List<Project> getByProjectCode(String projectCode);
+    Project getByProjectCode(String projectCode);
+
+    Project getByProjectCodeAndIdNot(String projectCode,Long id);
 
     List<Project> getByProjectCodeContains(String projectCode);
 

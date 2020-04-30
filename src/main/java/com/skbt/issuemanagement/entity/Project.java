@@ -15,7 +15,7 @@ public class Project extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Column(name="project_code",unique = true)
     private String projectCode;

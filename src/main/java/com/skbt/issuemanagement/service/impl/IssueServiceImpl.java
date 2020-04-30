@@ -1,7 +1,10 @@
 package com.skbt.issuemanagement.service.impl;
 
 import com.skbt.issuemanagement.dto.IssueDto;
+import com.skbt.issuemanagement.dto.ProjectDto;
 import com.skbt.issuemanagement.entity.Issue;
+import com.skbt.issuemanagement.entity.Project;
+import com.skbt.issuemanagement.entity.User;
 import com.skbt.issuemanagement.repository.IssueRepository;
 import com.skbt.issuemanagement.service.IssueService;
 import com.skbt.issuemanagement.util.TPage;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
 import java.util.Arrays;
+import java.util.Date;
 
 @Service
 public class IssueServiceImpl implements IssueService {
@@ -44,7 +48,9 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public IssueDto getById(Long id) {
-        return null;
+        Issue issue = issueRepository.getOne(id);
+
+        return  modelMapper.map(issue,IssueDto.class);
     }
 
     @Override
@@ -62,5 +68,33 @@ public class IssueServiceImpl implements IssueService {
     @Override
     public Boolean delete(IssueDto issue) {
         return null;
+    }
+
+    public Boolean delete(Long id) {
+        issueRepository.deleteById(id);
+        return  true;
+    }
+
+    @Override
+    public IssueDto update(Long id, IssueDto issueDto) {
+        Issue issueDb = issueRepository.getOne(id);
+        if(issueDb == null){
+            throw  new IllegalArgumentException("Issue does not exist ID:" + id);
+        }
+
+        Issue issueCheck = issueRepository.getOne(issueDto.getId());
+        if(issueCheck != null){
+            throw  new IllegalArgumentException("Issue  already exist");
+        }
+
+        issueDb.setDate(issueDto.getDate());
+        issueDb.setDetails(issueDto.getDetails());
+        issueDb.setIssueStatus(issueDto.getIssueStatus());
+        issueDb.setAssignee(modelMapper.map(issueDto.getAssignee(), User.class));
+        issueDb.setProject(modelMapper.map(issueDto.getProject(),Project.class));
+
+        issueDb =issueRepository.save(issueDb);
+
+        return  modelMapper.map(issueDb, IssueDto.class);
     }
 }

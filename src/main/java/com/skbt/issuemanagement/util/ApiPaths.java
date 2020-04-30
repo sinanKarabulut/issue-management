@@ -1,0 +1,13 @@
+package com.skbt.issuemanagement.util;
+
+public final class ApiPaths {
+    private static final String Base_PATH="/api";
+
+    public static final class IssueCtrl{
+        public static final String CTRL= Base_PATH + "/issue";
+    }
+
+    public static final class ProjectCtrl{
+        public static final String CTRL= Base_PATH + "/project";
+    }
+}
