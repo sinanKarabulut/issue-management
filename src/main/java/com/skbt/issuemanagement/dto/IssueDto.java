@@ -15,4 +15,5 @@ public class IssueDto {
     private  UserDto assignee;
     private ProjectDto project;
 
+
 }
