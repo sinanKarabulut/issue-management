@@ -1,0 +1,44 @@
+[
+  {
+    "_class": "com.skbt.issuemanagement.entity.Project",
+    "projectCode" : "IM",
+    "projectName": "Issue Management Project"
+  },
+  {
+    "_class": "com.skbt.issuemanagement.entity.Project",
+    "projectCode" : "ERP-S",
+    "projectName": "ERP Project for Sales"
+  },
+  {
+    "_class": "com.skbt.issuemanagement.entity.Project",
+    "projectCode" : "CRM-S",
+    "projectName": "CRM Project for Sales"
+  },
+  {
+    "_class": "com.skbt.issuemanagement.entity.Project",
+    "projectCode" : "CRM-B",
+    "projectName": "CRM Project for Bussiness"
+  },
+  {
+    "_class": "com.skbt.issuemanagement.entity.Project",
+    "projectCode" : "ERP-B",
+    "projectName": "ERP Project for Bussiness"
+  },
+  {
+    "_class": "com.skbt.issuemanagement.entity.Project",
+    "projectCode" : "TP",
+    "projectName": "Test Project"
+  },
+  {
+    "_class": "com.skbt.issuemanagement.entity.User",
+    "username" : "skbt",
+    "nameSurname": "Taner TEMEL",
+    "email":"taner.skbt@gmail.com"
+  },
+  {
+    "_class": "com.skbt.issuemanagement.entity.User",
+    "username" : "jdoe",
+    "nameSurname": "John Doe",
+    "email":"jdoe@gmail.com"
+  }
+]
