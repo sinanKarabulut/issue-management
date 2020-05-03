@@ -5,6 +5,7 @@ import com.skbt.issuemanagement.service.impl.ProjectServiceImpl;
 import com.skbt.issuemanagement.util.ApiPaths;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(ApiPaths.ProjectCtrl.CTRL)
 @Api(value = ApiPaths.ProjectCtrl.CTRL, description =  "Project APIs Document")
+@Slf4j
 public class ProjectController {
     /**
      * http methodları
@@ -38,6 +40,10 @@ public class ProjectController {
     @GetMapping("/{id}")
     @ApiOperation(value ="Get By Id Operations",response = ProjectDto.class)
     public ResponseEntity<ProjectDto> getById(@PathVariable("id") Long id){
+        log.info("ProjectController -> GetById ");
+        log.debug("ProjectController -> GetById -> Param:" + id);
+
+
         ProjectDto projectDto =  projectServiceImpl.getById(id);
         return  ResponseEntity.ok(projectDto);
     }
