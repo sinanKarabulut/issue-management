@@ -4,6 +4,7 @@ import {HomeComponent} from "./pages/home/home.component";
 import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 import {IssueComponent} from "./pages/issue/issue.component";
 import {ProjectComponent} from "./pages/project/project.component";
+import {AppLayoutComponent} from "./_layout";
 
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
       {path: 'project', loadChildren: './pages/project/project.module#ProjectModule'}
     ]
   }*/
-  {path:"",component:DashboardComponent},
+
+  {path:"",component: AppLayoutComponent},
   {path:"dashboard",component:DashboardComponent},
   {path:"issue",component:IssueComponent},
   {path:"project",component:ProjectComponent}
