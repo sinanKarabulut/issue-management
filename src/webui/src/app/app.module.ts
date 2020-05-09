@@ -9,8 +9,14 @@ import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 import {IssueComponent} from "./pages/issue/issue.component";
 import {ProjectComponent} from "./pages/project/project.component";
 import {ApiService} from "./services/api.service";
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+
+export const createTranslateLoader = (http:HttpClient) => {
+  return new TranslateHttpLoader(http,'./assets/i18n/','.json');
+}
 
 @NgModule({
   declarations: [
@@ -28,7 +34,15 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    //translate modülünü initialize etmiş olduk
+    TranslateModule.forRoot({
+      loader :{
+        provide : TranslateLoader,
+        useFactory : createTranslateLoader,
+        deps : [HttpClient]
+      }
+    })
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
