@@ -13,6 +13,8 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {BsModalService, ModalModule} from "ngx-bootstrap";
+import {ReactiveFormsModule} from "@angular/forms";
 
 export const createTranslateLoader = (http:HttpClient) => {
   return new TranslateHttpLoader(http,'./assets/i18n/','.json');
@@ -35,6 +37,7 @@ export const createTranslateLoader = (http:HttpClient) => {
     AppRoutingModule,
     HttpClientModule,
     NgxDatatableModule,
+    ReactiveFormsModule,
     //translate modülünü initialize etmiş olduk
     TranslateModule.forRoot({
       loader :{
@@ -42,7 +45,9 @@ export const createTranslateLoader = (http:HttpClient) => {
         useFactory : createTranslateLoader,
         deps : [HttpClient]
       }
-    })
+    }),
+    ModalModule.forRoot()
+
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
