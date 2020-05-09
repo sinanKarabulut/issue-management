@@ -9,22 +9,24 @@ import {AppLayoutComponent} from "./_layout";
 
 const routes: Routes = [
   /*{
-    path: '',
+    path: '', component: AppLayoutComponent,
     children: [
-      {path: '', pathMatch: 'full', redirectTo: 'home'},
-      {path: 'dashboard', loadChildren => import ("./pages/dashboard/dashboard.module").then(m=>m.DashboardModule)},
+      {path: '', pathMatch: 'full', redirectTo: 'dashboard'},
+      {path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardModule'},
       {path: 'issue', loadChildren: './pages/issue/issue.module#IssueModule'},
       {path: 'project', loadChildren: './pages/project/project.module#ProjectModule'}
     ]
   }*/
 
-  {path:"",component: AppLayoutComponent},
-  {path:"dashboard",component:DashboardComponent},
-  {path:"issue",component:IssueComponent},
-  {path:"project",component:ProjectComponent}
-  //{
-
-];
+  {
+    path: "",
+    component: AppLayoutComponent,
+    children: [
+      {path: "dashboard", component: DashboardComponent},
+      {path: "issue", component: IssueComponent},
+      {path: "project", component: ProjectComponent}
+    ]
+  }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

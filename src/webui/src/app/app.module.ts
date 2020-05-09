@@ -8,6 +8,9 @@ import {HomeComponent} from "./pages/home/home.component";
 import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 import {IssueComponent} from "./pages/issue/issue.component";
 import {ProjectComponent} from "./pages/project/project.component";
+import {ApiService} from "./services/api.service";
+import {HttpClientModule} from "@angular/common/http";
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 
 @NgModule({
   declarations: [
@@ -23,9 +26,11 @@ import {ProjectComponent} from "./pages/project/project.component";
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    NgxDatatableModule
   ],
-  providers: [],
+  providers: [ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -19,6 +19,7 @@ import javax.validation.Valid;
 @RequestMapping(ApiPaths.ProjectCtrl.CTRL)
 @Api(value = ApiPaths.ProjectCtrl.CTRL, description =  "Project APIs Document")
 @Slf4j
+@CrossOrigin
 public class ProjectController {
     /**
      * http methodları
