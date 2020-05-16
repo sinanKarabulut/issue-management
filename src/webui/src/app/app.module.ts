@@ -13,8 +13,17 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {BsModalService, ModalModule} from "ngx-bootstrap";
-import {ReactiveFormsModule} from "@angular/forms";
+import {
+  BsDatepickerModule,
+  BsDropdownModule,
+  BsModalService,
+  CollapseModule,
+  ModalModule,
+  PaginationModule
+} from "ngx-bootstrap";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ConfirmationComponent} from "./shared/confirmation/confirmation.component";
+import {ToastNoAnimation, ToastNoAnimationModule, ToastrModule} from "ngx-toastr";
 
 export const createTranslateLoader = (http:HttpClient) => {
   return new TranslateHttpLoader(http,'./assets/i18n/','.json');
@@ -30,26 +39,39 @@ export const createTranslateLoader = (http:HttpClient) => {
     HomeComponent,
     DashboardComponent,
     IssueComponent,
-    ProjectComponent
+    ProjectComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    NgxDatatableModule,
+    FormsModule,
     ReactiveFormsModule,
-    //translate modülünü initialize etmiş olduk
-    TranslateModule.forRoot({
-      loader :{
-        provide : TranslateLoader,
-        useFactory : createTranslateLoader,
-        deps : [HttpClient]
-      }
+    HttpClientModule,
+    AppRoutingModule,
+    NgxDatatableModule,
+    CollapseModule.forRoot(),
+    BsDropdownModule.forRoot(),
+    ModalModule.forRoot(),
+    PaginationModule.forRoot(),
+    BsDatepickerModule.forRoot(),
+    ToastNoAnimationModule,
+    ToastrModule.forRoot({
+      toastComponent: ToastNoAnimation,
+      maxOpened: 1,
+      autoDismiss: true
     }),
-    ModalModule.forRoot()
-
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [ApiService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    ConfirmationComponent
+  ]
 })
 export class AppModule { }
