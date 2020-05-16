@@ -2,8 +2,10 @@ package com.skbt.issuemanagement.service.impl;
 
 import com.skbt.issuemanagement.dto.IssueDto;
 import com.skbt.issuemanagement.dto.ProjectDto;
+import com.skbt.issuemanagement.dto.UserDto;
 import com.skbt.issuemanagement.entity.Issue;
 import com.skbt.issuemanagement.entity.Project;
+import com.skbt.issuemanagement.entity.User;
 import com.skbt.issuemanagement.repository.ProjectRepository;
 import com.skbt.issuemanagement.service.ProjectService;
 import com.skbt.issuemanagement.util.TPage;
@@ -21,9 +23,11 @@ public class ProjectServiceImpl implements ProjectService {
 
     private   final ProjectRepository projectRepository;
     private  final ModelMapper modelMapper;
-    public ProjectServiceImpl(ProjectRepository projectRepository,ModelMapper modelMapper){
+    private final UserServiceImpl userService;
+    public ProjectServiceImpl(ProjectRepository projectRepository,ModelMapper modelMapper,UserServiceImpl userService){
         this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
+        this.userService = userService;
     }
 
     @Override
@@ -35,6 +39,11 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         Project projectDb = modelMapper.map(project,Project.class);
+
+        UserDto userDto = userService.getById(project.getManagerId());
+        User userDb = modelMapper.map(userDto,User.class);
+        projectDb.setManager(userDb);
+
         projectDb =projectRepository.save(projectDb);
 
         return  modelMapper.map(projectDb, ProjectDto.class);

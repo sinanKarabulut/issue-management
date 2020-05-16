@@ -10,4 +10,8 @@ public final class ApiPaths {
     public static final class ProjectCtrl{
         public static final String CTRL= Base_PATH + "/project";
     }
+
+    public static final class UserCtrl{
+        public static final String CTRL= Base_PATH + "/users";
+    }
 }

@@ -1,18 +1,20 @@
 package com.skbt.issuemanagement.service;
 
-import com.skbt.issuemanagement.entity.Project;
-import com.skbt.issuemanagement.entity.User;
-import org.springframework.data.domain.Page;
+
+import com.skbt.issuemanagement.dto.UserDto;
+import com.skbt.issuemanagement.util.TPage;
 import org.springframework.data.domain.Pageable;
 
+/**
+ * Created by temelt on 4.02.2019.
+ */
 public interface UserService {
-    User save(User user);
 
-    User getById(Long id);
+    UserDto save(UserDto user);
 
-    Page<User> getAllPageable(Pageable pageable);
+    UserDto getById(Long id);
 
-    Boolean delete(User user);
+    TPage<UserDto> getAllPageable(Pageable pageable);
 
-    User getByUsername(String username);
+    UserDto getByUsername(String username);
 }

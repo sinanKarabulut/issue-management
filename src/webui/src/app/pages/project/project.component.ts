@@ -4,6 +4,7 @@ import {Page} from "../../common/page";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ConfirmationComponent} from "../../shared/confirmation/confirmation.component";
+import {USerService} from "../../services/shared/user.service";
 
 
 @Component({
@@ -16,12 +17,15 @@ export class ProjectComponent implements OnInit {
   page = new Page();
   rows = new Array<any>();
   cols = [];
+  managerOptions = [];
   modalRef: BsModalRef;
   projectForm: FormGroup;
   @ViewChild('tplProjectDeleteCell') tplProjectDeleteCell : TemplateRef<any>;
 
-  constructor(private projectService: ProjectService, private modalService: BsModalService,
-              private formBuilder: FormBuilder) {
+  constructor(private projectService: ProjectService,
+              private modalService: BsModalService,
+              private formBuilder: FormBuilder,
+              private userService : USerService) {
 
   }
 
@@ -31,6 +35,7 @@ export class ProjectComponent implements OnInit {
       {prop: 'id', name: 'No'},
       {prop: 'projectName', name: 'Project Name', sortable: false},
       {prop: 'projectCode', name: 'Project Code', sortable: false},
+      {prop: 'manager.nameSurname', name: 'Project Manager Name', sortable: false},
       {prop: 'id', name: 'Actions', cellTemplate : this.tplProjectDeleteCell,sortable: false}
 
 
@@ -39,7 +44,13 @@ export class ProjectComponent implements OnInit {
 
     this.projectForm = this.formBuilder.group({
       'projectCode': [null, [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
-      'projectName': [null, [Validators.required, Validators.minLength(4)]]
+      'projectName': [null, [Validators.required, Validators.minLength(4)]],
+      'managerId' : [null,[Validators.required]]
+    });
+
+    this.userService.getAll().subscribe(response=>{
+      this.managerOptions = response;
+      console.log(response);
     });
 
   }
@@ -73,11 +84,12 @@ export class ProjectComponent implements OnInit {
     }
     this.projectService.createProject(this.projectForm.value).subscribe(
       response => {
-        console.log(response)
+        console.log(response);
+        this.setPage(this.page);
+        this.closeAndResetModal();
       }
     )
-    this.setPage(this.page);
-    this.closeAndResetModal();
+
   }
 
   public showDeleteConfirmation(value) {

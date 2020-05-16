@@ -6,14 +6,14 @@ import {map} from "rxjs/operators";
 @Injectable({
   providedIn: 'root'
 })
-export class USerService {
+export class IssueHistoryService {
   constructor(private apiService: ApiService) {
   }
 
-  private USER_PATH = "/users";
+  private ISSUE_HISTORY_PATH = "/issue/history";
 
   getAll() : Observable<any>{
-    return this.apiService.get(this.USER_PATH).pipe(map(
+    return this.apiService.get(this.ISSUE_HISTORY_PATH).pipe(map(
       res =>{
         if(res){
           return res;
@@ -25,7 +25,7 @@ export class USerService {
   }
 
   getById(id): Observable<any> {
-    return this.apiService.get(this.USER_PATH,id).pipe(map(
+    return this.apiService.get(this.ISSUE_HISTORY_PATH,id).pipe(map(
       res =>{
         if(res){
           return res;
@@ -37,8 +37,8 @@ export class USerService {
     );
   }
 
-  createUser(user) : Observable<any>{
-    return this.apiService.post(this.USER_PATH,user).pipe(map(
+  createIssueHistory(IssueHistory) : Observable<any>{
+    return this.apiService.post(this.ISSUE_HISTORY_PATH,IssueHistory).pipe(map(
       res =>{
         if(res){
           return res;
@@ -51,7 +51,7 @@ export class USerService {
   }
 
   delete(id): Observable<any> {
-    return this.apiService.delete(this.USER_PATH,id).pipe(map(
+    return this.apiService.delete(this.ISSUE_HISTORY_PATH,id).pipe(map(
       res =>{
         if(res){
           return res;

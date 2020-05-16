@@ -24,6 +24,8 @@ import {
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ConfirmationComponent} from "./shared/confirmation/confirmation.component";
 import {ToastNoAnimation, ToastNoAnimationModule, ToastrModule} from "ngx-toastr";
+import {USerService} from "./services/shared/user.service";
+import {IssueHistoryService} from "./services/shared/issue.history.service";
 
 export const createTranslateLoader = (http:HttpClient) => {
   return new TranslateHttpLoader(http,'./assets/i18n/','.json');
@@ -68,7 +70,7 @@ export const createTranslateLoader = (http:HttpClient) => {
       }
     })
   ],
-  providers: [ApiService],
+  providers: [ApiService,USerService,IssueHistoryService],
   bootstrap: [AppComponent],
   entryComponents: [
     ConfirmationComponent
