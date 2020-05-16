@@ -26,6 +26,7 @@ import {ConfirmationComponent} from "./shared/confirmation/confirmation.componen
 import {ToastNoAnimation, ToastNoAnimationModule, ToastrModule} from "ngx-toastr";
 import {USerService} from "./services/shared/user.service";
 import {IssueHistoryService} from "./services/shared/issue.history.service";
+import {NotfoundComponent} from "./shared/notfound/notfound.component";
 
 export const createTranslateLoader = (http:HttpClient) => {
   return new TranslateHttpLoader(http,'./assets/i18n/','.json');
@@ -42,7 +43,8 @@ export const createTranslateLoader = (http:HttpClient) => {
     DashboardComponent,
     IssueComponent,
     ProjectComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    NotfoundComponent
   ],
   imports: [
     BrowserModule,

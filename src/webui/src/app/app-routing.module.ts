@@ -5,18 +5,10 @@ import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 import {IssueComponent} from "./pages/issue/issue.component";
 import {ProjectComponent} from "./pages/project/project.component";
 import {AppLayoutComponent} from "./_layout";
+import {NotfoundComponent} from "./shared/notfound/notfound.component";
 
 
 const routes: Routes = [
-  /*{
-    path: '', component: AppLayoutComponent,
-    children: [
-      {path: '', pathMatch: 'full', redirectTo: 'dashboard'},
-      {path: 'dashboard', loadChildren: './pages/dashboard/dashboard.module#DashboardModule'},
-      {path: 'issue', loadChildren: './pages/issue/issue.module#IssueModule'},
-      {path: 'project', loadChildren: './pages/project/project.module#ProjectModule'}
-    ]
-  }*/
 
   {
     path: "",
@@ -25,8 +17,9 @@ const routes: Routes = [
       {path: "dashboard", component: DashboardComponent},
       {path: "issue", component: IssueComponent},
       {path: "project", component: ProjectComponent}
-    ]
-  }];
+    ]},
+  {path: '**', component: NotfoundComponent}];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
