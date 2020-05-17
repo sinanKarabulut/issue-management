@@ -1,7 +1,9 @@
 package com.skbt.issuemanagement.api;
 
 import com.skbt.issuemanagement.dto.ProjectDto;
+import com.skbt.issuemanagement.dto.UserDto;
 import com.skbt.issuemanagement.service.impl.ProjectServiceImpl;
+import com.skbt.issuemanagement.service.impl.UserServiceImpl;
 import com.skbt.issuemanagement.util.ApiPaths;
 import com.skbt.issuemanagement.util.TPage;
 import io.swagger.annotations.Api;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(ApiPaths.ProjectCtrl.CTRL)
@@ -36,6 +39,7 @@ public class ProjectController {
 
     private final ProjectServiceImpl projectServiceImpl;
 
+
     public  ProjectController(ProjectServiceImpl projectServiceImpl){
         this.projectServiceImpl = projectServiceImpl;
     }
@@ -45,6 +49,13 @@ public class ProjectController {
     public ResponseEntity<TPage<ProjectDto>> getAllByPagination(Pageable pageable){
         TPage<ProjectDto> data = projectServiceImpl.getAllPageable(pageable);
         return  ResponseEntity.ok(data);
+    }
+
+    @GetMapping()
+    @ApiOperation(value = "Get All By Operation", response = UserDto.class)
+    public ResponseEntity<List<ProjectDto>> getAll() {
+        List<ProjectDto> data = projectServiceImpl.getAll();
+        return ResponseEntity.ok(data);
     }
 
     @GetMapping("/{id}")

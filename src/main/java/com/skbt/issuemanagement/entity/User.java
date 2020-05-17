@@ -5,13 +5,19 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity // jpa annotation
+/*@Entity // jpa annotation
 @Table(name="Users")
 @Data // getter setter için
 @NoArgsConstructor //boş bir constructure otomatik yapar
 @AllArgsConstructor // tüm fieldlar yapılarak yapılmış contructure dır.
 @ToString //nesnenin to stringini oluşturur
-@EqualsAndHashCode //equals ve hashcode metodunu otomatik ekler
+@EqualsAndHashCode //equals ve hashcode metodunu otomatik ekler*/
+@Entity
+@Table(name = "users", indexes = {@Index(name = "idx_username", columnList = "uname")})
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

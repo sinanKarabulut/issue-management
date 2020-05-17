@@ -1,10 +1,13 @@
 package com.skbt.issuemanagement.service.impl;
 
+import com.skbt.issuemanagement.dto.IssueDetailDto;
 import com.skbt.issuemanagement.dto.IssueDto;
+import com.skbt.issuemanagement.dto.IssueHistoryDto;
 import com.skbt.issuemanagement.dto.ProjectDto;
 import com.skbt.issuemanagement.entity.Issue;
 import com.skbt.issuemanagement.entity.Project;
 import com.skbt.issuemanagement.entity.User;
+import com.skbt.issuemanagement.repository.IssueHistoryRepository;
 import com.skbt.issuemanagement.repository.IssueRepository;
 import com.skbt.issuemanagement.service.IssueService;
 import com.skbt.issuemanagement.util.TPage;
@@ -17,6 +20,7 @@ import org.springframework.ui.ModelMap;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class IssueServiceImpl implements IssueService {
@@ -26,12 +30,14 @@ public class IssueServiceImpl implements IssueService {
     private IssueRepository issueRepository; // setter injection*/
 
     private final IssueRepository issueRepository;
+    private final IssueHistoryServiceImpl issueHistoryService;
     private final ModelMapper modelMapper;
     //best practice de constructure injection öneriliyor
     //@Autowired da yazılabilir  spring 5 den itibaren autowired olmadan bunun zaten autowired yapılacağını biliyor.
-    public IssueServiceImpl(IssueRepository issueRepository, ModelMapper modelMapper) {
+    public IssueServiceImpl(IssueRepository issueRepository, ModelMapper modelMapper,IssueHistoryServiceImpl issueHistoryService) {
         this.issueRepository = issueRepository;
         this.modelMapper = modelMapper;
+        this.issueHistoryService = issueHistoryService;
     }
 
 
@@ -77,15 +83,15 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public IssueDto update(Long id, IssueDto issueDto) {
-        Issue issueDb = issueRepository.getOne(id);
+        Issue issueDb = issueRepository.getById(id);
         if(issueDb == null){
             throw  new IllegalArgumentException("Issue does not exist ID:" + id);
         }
 
-        Issue issueCheck = issueRepository.getOne(issueDto.getId());
+        /*Issue issueCheck = issueRepository.getOne(issueDto.getId());
         if(issueCheck != null){
             throw  new IllegalArgumentException("Issue  already exist");
-        }
+        }*/
 
         issueDb.setDate(issueDto.getDate());
         issueDb.setDetails(issueDto.getDetails());
@@ -96,5 +102,13 @@ public class IssueServiceImpl implements IssueService {
         issueDb =issueRepository.save(issueDb);
 
         return  modelMapper.map(issueDb, IssueDto.class);
+    }
+
+    public IssueDetailDto getByIdWithDetails(Long id) {
+        Issue issue = issueRepository.getOne(id);
+        IssueDetailDto detailDto = modelMapper.map(issue, IssueDetailDto.class);
+        List<IssueHistoryDto> issueHistoryDtos = issueHistoryService.getByIssueId(issue.getId());
+        detailDto.setIssueHistories(issueHistoryDtos);
+        return detailDto;
     }
 }

@@ -2,7 +2,7 @@ export class Page {
 
   constructor() {
     this.page= 0;
-    this.size = 3;
+    this.size = 15;
   }
 
   //The number of elements in the page

@@ -4,7 +4,7 @@ import {Page} from "../../common/page";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ConfirmationComponent} from "../../shared/confirmation/confirmation.component";
-import {USerService} from "../../services/shared/user.service";
+import {UserService} from "../../services/shared/user.service";
 
 
 @Component({
@@ -25,7 +25,7 @@ export class ProjectComponent implements OnInit {
   constructor(private projectService: ProjectService,
               private modalService: BsModalService,
               private formBuilder: FormBuilder,
-              private userService : USerService) {
+              private userService : UserService) {
 
   }
 
@@ -61,7 +61,7 @@ export class ProjectComponent implements OnInit {
 
   setPage(pageInfo) {
     this.page.page = pageInfo.offset;
-    this.projectService.getAll(this.page).subscribe(pageData => {
+    this.projectService.getAllPageable(this.page).subscribe(pageData => {
       this.page.size = pageData.size;
       this.page.page = pageData.number;
       this.page.totalElements = pageData.totalElements;

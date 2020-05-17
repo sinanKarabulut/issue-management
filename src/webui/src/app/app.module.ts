@@ -22,11 +22,17 @@ import {
   PaginationModule
 } from "ngx-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {ConfirmationComponent} from "./shared/confirmation/confirmation.component";
 import {ToastNoAnimation, ToastNoAnimationModule, ToastrModule} from "ngx-toastr";
-import {USerService} from "./services/shared/user.service";
+import {UserService} from "./services/shared/user.service";
 import {IssueHistoryService} from "./services/shared/issue.history.service";
 import {NotfoundComponent} from "./shared/notfound/notfound.component";
+import {IssueDetailComponent} from "./pages/issue/issue-detail/issue-detail.component";
+import {ProjectModule} from "./pages/project/project.module";
+import {HomeModule} from "./pages/home/home.module";
+import {DashboardModule} from "./pages/dashboard/dashboard.module";
+import {IssueModule} from "./pages/issue/issue.module";
+import {CommonModule} from "@angular/common";
+import {IssueService} from "./services/shared/issue.service";
 
 export const createTranslateLoader = (http:HttpClient) => {
   return new TranslateHttpLoader(http,'./assets/i18n/','.json');
@@ -39,16 +45,19 @@ export const createTranslateLoader = (http:HttpClient) => {
     FooterComponent,
     HeaderComponent,
     SidebarComponent,
-    HomeComponent,
+    /*HomeComponent,
     DashboardComponent,
     IssueComponent,
-    ProjectComponent,
-    ConfirmationComponent,
+    ProjectComponent,*/
     NotfoundComponent
+
   ],
   imports: [
+    ProjectModule,
+    HomeModule,
+    DashboardModule,
+    IssueModule,
     BrowserModule,
-    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
@@ -72,10 +81,7 @@ export const createTranslateLoader = (http:HttpClient) => {
       }
     })
   ],
-  providers: [ApiService,USerService,IssueHistoryService],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    ConfirmationComponent
-  ]
+  providers: [ApiService,UserService,IssueHistoryService,IssueService],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
