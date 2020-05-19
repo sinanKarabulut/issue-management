@@ -2,6 +2,7 @@ package com.skbt.issuemanagement.service.impl;
 
 import com.skbt.issuemanagement.dto.*;
 import com.skbt.issuemanagement.entity.Issue;
+import com.skbt.issuemanagement.entity.IssueStatus;
 import com.skbt.issuemanagement.entity.Project;
 import com.skbt.issuemanagement.entity.User;
 import com.skbt.issuemanagement.repository.IssueHistoryRepository;
@@ -47,11 +48,19 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     public IssueDto save(IssueDto issue) {
-        if(issue.getDate() == null){
-            throw new IllegalArgumentException("Issue Date cannot be null");
-        }
+
+        issue.setDate(new Date());
+        issue.setIssueStatus(IssueStatus.OPEN);
+
+        Project project=projectRepository.getOne(issue.getProjectId());
+
+
         Issue issueDb = modelMapper.map(issue,Issue.class);
+
+        issueDb.setProject(project);
         issueDb =issueRepository.save(issueDb);
+
+        issueHistoryService.addHistory(issueDb.getId(),issueDb);
 
         return  modelMapper.map(issueDb,IssueDto.class);
     }

@@ -13,7 +13,6 @@ import {UserService} from "../../services/shared/user.service";
   styleUrls: ['./project.component.scss']
 })
 export class ProjectComponent implements OnInit {
-  debugger;
   page = new Page();
   rows = new Array<any>();
   cols = [];

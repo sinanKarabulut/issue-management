@@ -21,5 +21,6 @@ public class IssueDto {
     private IssueStatus issueStatus;
     private  UserDto assignee;
     private ProjectDto project;
+    private Long projectId;
 
 }
