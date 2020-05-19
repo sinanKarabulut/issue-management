@@ -1,14 +1,13 @@
 package com.skbt.issuemanagement.service.impl;
 
-import com.skbt.issuemanagement.dto.IssueDetailDto;
-import com.skbt.issuemanagement.dto.IssueDto;
-import com.skbt.issuemanagement.dto.IssueHistoryDto;
-import com.skbt.issuemanagement.dto.ProjectDto;
+import com.skbt.issuemanagement.dto.*;
 import com.skbt.issuemanagement.entity.Issue;
 import com.skbt.issuemanagement.entity.Project;
 import com.skbt.issuemanagement.entity.User;
 import com.skbt.issuemanagement.repository.IssueHistoryRepository;
 import com.skbt.issuemanagement.repository.IssueRepository;
+import com.skbt.issuemanagement.repository.ProjectRepository;
+import com.skbt.issuemanagement.repository.UserRepository;
 import com.skbt.issuemanagement.service.IssueService;
 import com.skbt.issuemanagement.util.TPage;
 import org.modelmapper.ModelMapper;
@@ -16,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 
 import java.util.Arrays;
@@ -32,12 +32,16 @@ public class IssueServiceImpl implements IssueService {
     private final IssueRepository issueRepository;
     private final IssueHistoryServiceImpl issueHistoryService;
     private final ModelMapper modelMapper;
+    private final UserRepository userRepository;
+    private final ProjectRepository projectRepository;
     //best practice de constructure injection öneriliyor
     //@Autowired da yazılabilir  spring 5 den itibaren autowired olmadan bunun zaten autowired yapılacağını biliyor.
-    public IssueServiceImpl(IssueRepository issueRepository, ModelMapper modelMapper,IssueHistoryServiceImpl issueHistoryService) {
+    public IssueServiceImpl(IssueRepository issueRepository, ModelMapper modelMapper,IssueHistoryServiceImpl issueHistoryService,UserRepository userRepository,ProjectRepository projectRepository) {
         this.issueRepository = issueRepository;
         this.modelMapper = modelMapper;
         this.issueHistoryService = issueHistoryService;
+        this.userRepository = userRepository;
+        this.projectRepository = projectRepository;
     }
 
 
@@ -50,6 +54,25 @@ public class IssueServiceImpl implements IssueService {
         issueDb =issueRepository.save(issueDb);
 
         return  modelMapper.map(issueDb,IssueDto.class);
+    }
+
+    @Transactional
+    public IssueDetailDto update(Long id, IssueUpdateDto issueUpdateDto) {
+        Issue issueDb = this.issueRepository.getOne(id);
+
+        User user = userRepository.getOne(issueUpdateDto.getAssignee_id());
+
+        issueDb.setAssignee(user);
+        issueDb.setDate(issueUpdateDto.getDate());
+        issueDb.setDetails(issueUpdateDto.getDetails());
+        issueDb.setDescription(issueUpdateDto.getDescription());
+        issueDb.setIssueStatus(issueUpdateDto.getIssueStatus());
+        issueDb.setProject(projectRepository.getOne(issueUpdateDto.getProject_id()));
+
+        issueRepository.save(issueDb);
+
+        issueHistoryService.addHistory(id,issueDb);
+        return  getByIdWithDetails(issueDb.getId());
     }
 
     @Override

@@ -55,8 +55,8 @@ export class IssueService{
     ));
   }
 
-  updateIssue(issue) : Observable<any>{
-    return this.apiService.put(this.ISSUE_PATH+ '/'+ issue.id ,issue).pipe(map(
+  updateIssue(issueUpdateDto) : Observable<any>{
+    return this.apiService.put(this.ISSUE_PATH+ '/'+ issueUpdateDto.id ,issueUpdateDto).pipe(map(
       res =>{
         if(res){
           return res;

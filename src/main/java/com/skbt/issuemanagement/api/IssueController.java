@@ -3,6 +3,7 @@ package com.skbt.issuemanagement.api;
 
 import com.skbt.issuemanagement.dto.IssueDetailDto;
 import com.skbt.issuemanagement.dto.IssueDto;
+import com.skbt.issuemanagement.dto.IssueUpdateDto;
 import com.skbt.issuemanagement.dto.ProjectDto;
 import com.skbt.issuemanagement.entity.IssueStatus;
 import com.skbt.issuemanagement.service.impl.IssueServiceImpl;
@@ -67,10 +68,13 @@ public class IssueController {
     @PutMapping("/{id}")
     @ApiOperation(value ="Update Operations",response = IssueDto.class)
     //@RequestMapping(path = "/update",method = RequestMethod.PUT)
-    public ResponseEntity<IssueDto> updateProject(@PathVariable(value = "id",required = true) Long id,@Valid  @RequestBody IssueDto issueDto){
+    public ResponseEntity<IssueDetailDto> updateProject(@PathVariable(value = "id",required = true) Long id,@Valid  @RequestBody IssueUpdateDto issueUpdateDto){
         //SOLID single responsibility sağlamaz
         //projectServiceImpl.save()
-        return ResponseEntity.ok(issueServiceImpl.update(id,issueDto));
+
+
+        System.out.println(issueUpdateDto);
+        return ResponseEntity.ok(issueServiceImpl.update(id,issueUpdateDto));
     }
 
     @DeleteMapping("/{id}")

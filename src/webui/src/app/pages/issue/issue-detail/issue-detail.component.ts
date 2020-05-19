@@ -102,7 +102,6 @@ export class IssueDetailComponent implements OnInit {
   }
 
   saveIssue(){
-    debugger;
     this.issueService.updateIssue(this.issueDetailForm.value).subscribe(response=>{
       this.issueDetailForm = this.createIssueDetailFormGroup(response);
       this.datatable_rows = response['issueHistories'];
