@@ -4,10 +4,6 @@ import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
 import {AppRoutingModule} from "./app-routing.module";
 import {AppLayoutComponent, FooterComponent, HeaderComponent, SidebarComponent} from "./_layout";
-import {HomeComponent} from "./pages/home/home.component";
-import {DashboardComponent} from "./pages/dashboard/dashboard.component";
-import {IssueComponent} from "./pages/issue/issue.component";
-import {ProjectComponent} from "./pages/project/project.component";
 import {ApiService} from "./services/api.service";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
@@ -16,7 +12,6 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {
   BsDatepickerModule,
   BsDropdownModule,
-  BsModalService,
   CollapseModule,
   ModalModule,
   PaginationModule
@@ -26,13 +21,12 @@ import {ToastNoAnimation, ToastNoAnimationModule, ToastrModule} from "ngx-toastr
 import {UserService} from "./services/shared/user.service";
 import {IssueHistoryService} from "./services/shared/issue.history.service";
 import {NotfoundComponent} from "./shared/notfound/notfound.component";
-import {IssueDetailComponent} from "./pages/issue/issue-detail/issue-detail.component";
 import {ProjectModule} from "./pages/project/project.module";
 import {HomeModule} from "./pages/home/home.module";
 import {DashboardModule} from "./pages/dashboard/dashboard.module";
 import {IssueModule} from "./pages/issue/issue.module";
-import {CommonModule} from "@angular/common";
 import {IssueService} from "./services/shared/issue.service";
+import {ProjectService} from "./services/shared/project.service";
 
 export const createTranslateLoader = (http:HttpClient) => {
   return new TranslateHttpLoader(http,'./assets/i18n/','.json');
@@ -45,19 +39,12 @@ export const createTranslateLoader = (http:HttpClient) => {
     FooterComponent,
     HeaderComponent,
     SidebarComponent,
-    /*HomeComponent,
-    DashboardComponent,
-    IssueComponent,
-    ProjectComponent,*/
     NotfoundComponent
 
   ],
   imports: [
-    ProjectModule,
-    HomeModule,
-    DashboardModule,
-    IssueModule,
     BrowserModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
@@ -79,7 +66,11 @@ export const createTranslateLoader = (http:HttpClient) => {
         useFactory: createTranslateLoader,
         deps: [HttpClient]
       }
-    })
+    }),
+    ProjectModule,
+    HomeModule,
+    DashboardModule,
+    IssueModule
   ],
   providers: [ApiService,UserService,IssueHistoryService,IssueService],
   bootstrap: [AppComponent]
