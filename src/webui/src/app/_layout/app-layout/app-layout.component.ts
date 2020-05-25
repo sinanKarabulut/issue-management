@@ -14,9 +14,8 @@ export class AppLayoutComponent implements OnInit {
 
     this.translateService.use(browserLang.match(/en|de|tr/) ? browserLang : 'en');
 
-    /*this.translateService.addLangs(['tr','en','de']);
-    const browserLang = this.translateService.getBrowserLang();
-    this.translateService.use(browserLang.match(/en|de|tr/) ? browserLang : 'en');*/
+    this.translateService.addLangs(['tr','en','de']);
+    this.translateService.use(browserLang.match(/en|de|tr/) ? browserLang : 'en');
   }
 
   ngOnInit() {

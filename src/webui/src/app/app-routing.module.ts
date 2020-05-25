@@ -9,6 +9,7 @@ import {NotfoundComponent} from "./shared/notfound/notfound.component";
 import {IssueDetailComponent} from "./pages/issue/issue-detail/issue-detail.component";
 import {AuthGuard} from "./security/auth-guard";
 import {LoginComponent} from "./login/login.component";
+import {RegisterComponent} from "./register/register.component";
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
       {path: 'issue/issue-detail/:id', component:IssueDetailComponent}
     ]},
   {path: 'login', component:LoginComponent},
+  {path: 'register', component:RegisterComponent},
   {path: '**', component: NotfoundComponent}
 
 

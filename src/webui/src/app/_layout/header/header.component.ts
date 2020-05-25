@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    debugger;
     this.activeUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
