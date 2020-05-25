@@ -1,6 +1,7 @@
 package com.skbt.issuemanagement.service.impl;
 
 
+import com.skbt.issuemanagement.dto.RegistrationRequest;
 import com.skbt.issuemanagement.dto.UserDto;
 import com.skbt.issuemanagement.entity.User;
 import com.skbt.issuemanagement.repository.UserRepository;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,10 +27,12 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper,BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.bCryptPasswordEncoder=bCryptPasswordEncoder;
     }
 
     @Override
@@ -65,7 +69,8 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(u, UserDto.class);
     }
 
-    /*@Transactional
+
+    @Transactional
     public Boolean register(RegistrationRequest registrationRequest) {
         try {
             User user = new User();
@@ -79,5 +84,5 @@ public class UserServiceImpl implements UserService {
             log.error("REGISTRATION=>", e);
             return Boolean.FALSE;
         }
-    }*/
+    }
 }

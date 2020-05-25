@@ -7,19 +7,23 @@ import {ProjectComponent} from "./pages/project/project.component";
 import {AppLayoutComponent} from "./_layout";
 import {NotfoundComponent} from "./shared/notfound/notfound.component";
 import {IssueDetailComponent} from "./pages/issue/issue-detail/issue-detail.component";
+import {AuthGuard} from "./security/auth-guard";
+import {LoginComponent} from "./login/login.component";
 
 
 const routes: Routes = [
   {
     path: "",
-    component: AppLayoutComponent,
+    component: AppLayoutComponent,canActivate: [AuthGuard], //app layoutun bütün sayfalarında authguard devreye girmesi için
     children: [
       {path: "dashboard", component: DashboardComponent},
       {path: "issue", component: IssueComponent},
       {path: "project", component: ProjectComponent},
       {path: 'issue/issue-detail/:id', component:IssueDetailComponent}
     ]},
+  {path: 'login', component:LoginComponent},
   {path: '**', component: NotfoundComponent}
+
 
 
 ];

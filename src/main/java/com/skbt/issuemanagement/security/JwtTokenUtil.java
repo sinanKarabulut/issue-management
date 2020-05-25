@@ -13,14 +13,14 @@ import java.util.Date;
 import java.util.function.Function;
 
 /**
- * Created by temelt on 15.02.2019.
+ * bu classta  jwt için gerekli hesaplamalar  token süresi set etme şifreleme ve şifre çözme işlemleri yer alır
  */
 @Component
 public class JwtTokenUtil {
 
     // 1Gün
     public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 24 * 60 * 60 * 1000;
-    public static final String SIGNING_KEY = "temelt";
+    public static final String SIGNING_KEY = "skbt";
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
@@ -58,7 +58,7 @@ public class JwtTokenUtil {
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuer("http://temelt.com")
+                .setIssuer("http://skbt.com")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS))
                 .signWith(SignatureAlgorithm.HS256, SIGNING_KEY)

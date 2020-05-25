@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
- * Created by temelt on 15.02.2019.
+ * security configde authorize olamadığında security  exception  için kullanılır
  */
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Serializable {

@@ -5,7 +5,7 @@ import { AppComponent } from "./app.component";
 import {AppRoutingModule} from "./app-routing.module";
 import {AppLayoutComponent, FooterComponent, HeaderComponent, SidebarComponent} from "./_layout";
 import {ApiService} from "./services/api.service";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
@@ -27,6 +27,12 @@ import {DashboardModule} from "./pages/dashboard/dashboard.module";
 import {IssueModule} from "./pages/issue/issue.module";
 import {IssueService} from "./services/shared/issue.service";
 import {ProjectService} from "./services/shared/project.service";
+import {JwtInterceptor} from "./security/jwt-interceptor";
+import {AuthGuard} from "./security/auth-guard";
+import {ErrorInterceptor} from "./security/authentication.interceptor";
+import {AuthenticationService} from "./security/authentication.service";
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 export const createTranslateLoader = (http:HttpClient) => {
   return new TranslateHttpLoader(http,'./assets/i18n/','.json');
@@ -39,7 +45,9 @@ export const createTranslateLoader = (http:HttpClient) => {
     FooterComponent,
     HeaderComponent,
     SidebarComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    LoginComponent,
+    RegisterComponent
 
   ],
   imports: [
@@ -72,7 +80,12 @@ export const createTranslateLoader = (http:HttpClient) => {
     DashboardModule,
     IssueModule
   ],
-  providers: [ApiService,UserService,IssueHistoryService,IssueService],
+  providers: [ApiService,UserService,IssueHistoryService,IssueService,
+    AuthenticationService,
+    AuthGuard,
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor,multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
