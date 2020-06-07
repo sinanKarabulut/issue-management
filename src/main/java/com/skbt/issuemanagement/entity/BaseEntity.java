@@ -19,7 +19,7 @@ import java.util.Date;
 public abstract class BaseEntity implements Serializable {
     @Column(name ="created_at")
     @Temporal(TemporalType.TIMESTAMP) // milisaniyeye kadar tutar, Date saatsiz,TIME  saniyeye kadar
-    private Date createAt;
+    private Date createAt = new Date();
 
     @Column(name ="created_by",length = 100)
     private  String createBy;
@@ -32,6 +32,6 @@ public abstract class BaseEntity implements Serializable {
     private  String updatedBy;
 
     @Column(name="status")
-    private  Boolean status;
+    private  Boolean status = true;
 
 }

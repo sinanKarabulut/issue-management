@@ -41,6 +41,19 @@
         </ul>
       </li>
 
+      <li [ngClass]="{'open': showMenu === 'sayisal'}">
+        <a (click)="addExpandClass('sayisal')" title="Issue">
+          <span class="nav-icon material-icons">supervisor_account</span> Sayısal
+          <span class="toogle-sub-nav material-icons">keyboard_arrow_right</span></a>
+        <ul class="sub-nav" [ngStyle]="{'display':(showMenu === 'sayisal')?'block':'none'}">
+          <li>
+            <a routerLink="/sayisal"routerLinkActive="active">
+              <span><span class="nav-icon material-icons">list</span> &nbsp;&nbsp;&nbsp;Sayısal List</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
     </ul>
 
   </nav>

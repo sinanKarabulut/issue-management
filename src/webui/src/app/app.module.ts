@@ -33,6 +33,7 @@ import {ErrorInterceptor} from "./security/authentication.interceptor";
 import {AuthenticationService} from "./security/authentication.service";
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import {SayisalModule} from "./pages/sayisal/sayisal.module";
 
 export const createTranslateLoader = (http:HttpClient) => {
   return new TranslateHttpLoader(http,'./assets/i18n/','.json');
@@ -78,7 +79,8 @@ export const createTranslateLoader = (http:HttpClient) => {
     ProjectModule,
     HomeModule,
     DashboardModule,
-    IssueModule
+    IssueModule,
+    SayisalModule
   ],
   providers: [ApiService,UserService,IssueHistoryService,IssueService,
     AuthenticationService,

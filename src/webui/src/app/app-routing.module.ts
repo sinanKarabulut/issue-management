@@ -10,6 +10,7 @@ import {IssueDetailComponent} from "./pages/issue/issue-detail/issue-detail.comp
 import {AuthGuard} from "./security/auth-guard";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
+import {SayisalComponent} from "./pages/sayisal/sayisal.component";
 
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
       {path: "dashboard", component: DashboardComponent},
       {path: "issue", component: IssueComponent},
       {path: "project", component: ProjectComponent},
-      {path: 'issue/issue-detail/:id', component:IssueDetailComponent}
+      {path: 'issue/issue-detail/:id', component:IssueDetailComponent},
+      {path: 'sayisal',component:SayisalComponent}
     ]},
   {path: 'login', component:LoginComponent},
   {path: 'register', component:RegisterComponent},
