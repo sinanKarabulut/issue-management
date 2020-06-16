@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {SayisalService} from "../../services/shared/sayisal.service";
 import {Page} from "../../common/page";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-sayisal',
@@ -10,25 +11,28 @@ import {Page} from "../../common/page";
 })
 export class SayisalComponent implements OnInit {
   page = new Page();
-  rows = new Array<any>();
+  rows = [];
   cols = [];
   sayisalForm: FormGroup;
-  postData = {
-    test : "deneme"
-  };
+  cekilisTarihi = new Date();
+  postData = new Object();
+  @ViewChild('tplDateCell') tplDateCell: TemplateRef<any>;
 
-  database = { customers: []};
-
-  constructor(private sayisalService : SayisalService,
+  constructor(private route: ActivatedRoute,
+              private sayisalService: SayisalService,
               private formBuilder: FormBuilder) {
 
   }
 
   ngOnInit() {
+
     this.cols = [
       {prop: 'sayisalId', name: 'No'},
-      {prop: 'cekilisTarihi', name: 'Çekiliş Name', sortable: false}
+      {prop: 'cekilisTarihi', name: 'Çekiliş Name', sortable: false},
+      {prop: 'birinciNumara', name: 'Birinci Rakam', sortable: false}
     ];
+
+    this.sayisalForm = this.createSayisalForm();
 
     this.setPage({offset: 0});
   }
@@ -39,26 +43,39 @@ export class SayisalComponent implements OnInit {
   }
 
   setPage(pageInfo) {
-    debugger;
 
     this.page.page = pageInfo.offset;
 
-    this.database.customers.push({
-      id: 1,
-      name: "faker.name.firstName() + ' ' + faker.name.lastName()",
-      email: "faker.internet.email()",
-      phone: "faker.phone.phoneNumber()",
-      city: "faker.address.city()",
-      country: "faker.address.country()",
-      title: "faker.name.title()"
-    });
-
-    this.sayisalService.getAll(this.database).toPromise().then(pageData => {
-      this.page.size = pageData.size;
-      this.page.page = pageData.number;
-      this.page.totalElements = pageData.totalElements;
-      this.rows = pageData.content;
+    this.sayisalService.getAll(this.sayisalForm.value).toPromise().then(data => {
+      this.setFillGrid(data.data);
+      /*this.page.size = data.size;
+      this.page.page = data.number;
+      this.page.totalElements = data.totalElements;
+      this.rows = data.content;*/
     })
   }
+
+  setFillGrid(data){
+    var jsonObject : any = JSON.parse(data);
+    this.rows = JSON.parse(jsonObject);
+  }
+  search() {
+    this.setPage({offset: 0});
+  }
+
+  createSayisalForm() {
+    return this.formBuilder.group({
+      cekilisTarihi: this.fromJsonDate(new Date())
+
+    });
+
+
+  }
+
+  fromJsonDate(jDate): string {
+    const bDate: Date = new Date(jDate);
+    return bDate.toISOString().substring(0, 10);
+  }
+
 
 }

@@ -15,6 +15,7 @@ import {
   CollapseModule,
   ModalModule,
   PaginationModule
+
 } from "ngx-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ToastNoAnimation, ToastNoAnimationModule, ToastrModule} from "ngx-toastr";

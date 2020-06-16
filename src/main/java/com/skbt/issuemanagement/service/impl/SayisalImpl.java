@@ -17,17 +17,19 @@ import net.sf.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.rmi.CORBA.Util;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
 
 @Service
 @Slf4j
@@ -46,7 +48,6 @@ public class SayisalImpl implements SayisalService {
         this.modelMapper = modelMapper;
         this.sayisalBilenKisilerRepository = sayisalBilenKisilerRepository;
         this.sayisalBuyukIkramiyeKazananIlcelerRepository = sayisalBuyukIkramiyeKazananIlcelerRepository;
-
     }
 
     /*@Override
@@ -238,10 +239,35 @@ public class SayisalImpl implements SayisalService {
         return  true;
     }
 
-    public JSONObject getSayisalBilgi(JSONObject data) throws  Exception{
+    public JSONObject getSayisalBilgi(Map<String, String[]> requestMap) throws  Exception{
         JSONObject sendJson = new JSONObject();
 
+        Date aramaTarih = Utils.getRequestMapDateValue(requestMap,"cekilisTarihi",null,Utils.strDateFormat);
+
+        Sayisal sayisal = new Sayisal();
+        sayisal.setCekilisTarihi(aramaTarih);
+
+        List<Sayisal> list = sayisalRepository.findAll(findByAndCriteria(sayisal));
+
+
+
+        sendJson.put("data",list);
         sendJson.put("success",true);
         return  sendJson;
+    }
+
+
+
+    public Specification<Sayisal> findByAndCriteria(Sayisal sayisal) {
+        return (Root<Sayisal> root, CriteriaQuery<?> query, CriteriaBuilder builder) -> {
+            List<javax.persistence.criteria.Predicate> predicates = new ArrayList<>();
+
+            if(sayisal.getCekilisTarihi() != null){
+                predicates.add(builder.equal(root.get("cekilisTarihi"),sayisal.getCekilisTarihi()));
+            }
+
+
+            return builder.and(predicates.toArray(new javax.persistence.criteria.Predicate[0]));
+        };
     }
 }

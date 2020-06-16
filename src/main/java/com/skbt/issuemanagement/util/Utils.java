@@ -11,10 +11,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 public class Utils {
@@ -207,6 +204,113 @@ public class Utils {
         return defaultVal;
     }
 
+    public static Integer reqGetInteger(String reqStr, Integer defaultVal) {
+        if (reqStr != null && !reqStr.equals("") && !reqStr.equals("null")) {
+            return Integer.valueOf(reqStr);
+        }
+        return defaultVal;
+    }
 
+    public static Long reqGetLong(String reqStr, Long defaultVal) {
+        if (reqStr != null && !reqStr.equals("")) {
+            return Long.valueOf(reqStr.trim());
+        }
+        if (reqStr != null && reqStr.equals("") && defaultVal == null) {
+            return null;
+        }
+        return defaultVal;
+    }
+
+    public static String reqGetString(String reqStr, String defaultVal) {
+        if (reqStr != null && !reqStr.equals("")) {
+            return reqStr;// .replaceAll("Ã", "Ü").replaceAll("Ä°", "İ").replaceAll("A¼", "ü").replaceAll("Ä", "Ğ");
+        }
+        return defaultVal;
+    }
+
+
+    public static Date reqGetDate(String reqStr, Date defaultVal, String format) {
+        if (reqStr != null && !reqStr.equals("")) {
+            SimpleDateFormat sdf;
+            if (format == null) {
+                sdf = new SimpleDateFormat(strDateFormat);
+            } else {
+                sdf = new SimpleDateFormat(format);
+            }
+            try {
+                return sdf.parse(reqStr);
+            } catch (ParseException e) {
+                return null;
+            }
+        }
+        return defaultVal;
+    }
+
+    public static Long getRequestMapLongValue(Map<String, String[]> requestMap, String key, Long defaultValue) {
+        if (requestMap.get(key) == null) {
+            return defaultValue;
+        }
+        if (requestMap.get(key)[0] == null || requestMap.get(key)[0].equals("")) {
+            return defaultValue;
+        }
+
+        return Long.valueOf(requestMap.get(key)[0].trim());
+    }
+
+    public static Integer getRequestMapIntegerValue(Map<String, String[]> requestMap, String key, Integer defaultValue) {
+        if (requestMap.get(key) == null) {
+            return defaultValue;
+        }
+        if (requestMap.get(key)[0] == null || requestMap.get(key)[0].equals("")) {
+            return defaultValue;
+        }
+
+        return Integer.valueOf(requestMap.get(key)[0]);
+    }
+
+    public static BigDecimal getRequestMapBigDecimalValue(Map<String, String[]> requestMap, String key, BigDecimal defaultValue) {
+        if (requestMap.get(key) == null) {
+            return defaultValue;
+        }
+        if (requestMap.get(key)[0] == null || requestMap.get(key)[0].equals("")) {
+            return defaultValue;
+        }
+
+        return new BigDecimal(requestMap.get(key)[0].toString());
+    }
+
+    public static Boolean getRequestMapBooleanValue(Map<String, String[]> requestMap, String key, Boolean defaultValue) {
+        if (requestMap.get(key) == null) {
+            return defaultValue;
+        }
+        if (requestMap.get(key)[0] == null || requestMap.get(key)[0].equals("")) {
+            return defaultValue;
+        }
+
+        return Boolean.valueOf(requestMap.get(key)[0]);
+    }
+
+    public static Date getRequestMapDateValue(Map<String, String[]> requestMap, String key, Date defaultValue, String format) {
+        if (requestMap.get(key) == null) {
+            return defaultValue;
+        }
+        if (requestMap.get(key)[0] == null || requestMap.get(key)[0].equals("")) {
+            return defaultValue;
+        }
+
+        SimpleDateFormat sdf;
+        if (format == null) {
+            sdf = new SimpleDateFormat(strDateFormat);
+        } else {
+            sdf = new SimpleDateFormat(format);
+        }
+
+        try {
+            return sdf.parse(requestMap.get(key)[0]);
+        } catch (ParseException e) {
+            return null;
+        }
+
+    }
 
 }

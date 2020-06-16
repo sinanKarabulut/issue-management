@@ -15,4 +15,25 @@
     (page)='setPage($event)'>
   </ngx-datatable>
 
+  <form *ngIf="sayisalForm" [formGroup]="sayisalForm">
+<div class="row">
+  <div class="col-md-4">
+    <div class="form-group">
+      <label class="badge">Çekiliş Tarihi</label>
+      <input type="date"  formControlName="cekilisTarihi" class="form-control" />
+    </div>
+  </div>
+  <div class="col-md-4">
+    <input type="button" value="Search" class="btn-primary" (click)="search()">
+  </div>
 </div>
+
+</form>
+
+<ng-template #tplDateCell let-row="row" let-value="value">
+  {{value | date: 'dd/MM/yyyy'}}
+</ng-template>
+
+</div>
+
+

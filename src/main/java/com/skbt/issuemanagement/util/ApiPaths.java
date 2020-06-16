@@ -16,7 +16,7 @@ public final class ApiPaths {
     }
 
     public static final class SayisalCtrl{
-        public static final String CTRL= Base_PATH + "/sayisal";
+        public static final String CTRL= Base_PATH + "/sayisal/*";
     }
 
 }

@@ -30,7 +30,7 @@ export class ApiService {
   }
 
   post(path: string, params: HttpParams = new HttpParams()): Observable<any> {
-    return this.http.post(environment.API_BASE_PATH + path, JSON.stringify(params),this.httpOptions).pipe(
+    return this.http.post(environment.API_BASE_PATH + path, params,this.httpOptions).pipe(
       //hata gelirse pipe girer
       catchError(this.formatError)
     );
