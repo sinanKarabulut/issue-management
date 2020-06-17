@@ -313,4 +313,86 @@ public class Utils {
 
     }
 
+    public static String mapGetStringForString(Map<String, String> obj, String param, String defaultVal) {
+        if (obj != null && obj.containsKey(param) && obj.get(param) != null && !obj.get(param).equals("")) {
+
+            return obj.get(param).toString();
+
+        }
+        return defaultVal;
+    }
+
+    /**
+     * Map<String, Object> nesnesi içerisinde belirtilen alanı String nesnesine dönüştürür.
+     * obj dolu ise key karşılığı döner boşşa defaultVal döner
+     *
+     * @param obj
+     * @param param
+     * @param defaultVal
+     * @return
+     */
+
+    public static String mapGetObjectForString(Map<String, Object> obj, String param, String defaultVal) {
+        if (obj != null && obj.containsKey(param) && obj.get(param) != null && !obj.get(param).equals("")) {
+
+            return obj.get(param).toString();
+
+        }
+        return defaultVal;
+    }
+
+    public static Boolean mapGetObjectForBoolean(Map<String, Object> obj, String param, Boolean defaultVal) {
+        if (obj != null && obj.containsKey(param) && obj.get(param) != null && !obj.get(param).equals("")) {
+            return Boolean.parseBoolean(obj.get(param).toString());
+        }
+        return defaultVal;
+    }
+
+    public static Integer mapGetObjectForInteger(Map<String, Object> obj, String param, Integer defaultVal) {
+        if (obj != null && obj.containsKey(param) && obj.get(param) != null && !obj.get(param).equals("")) {
+            return Integer.parseInt(obj.get(param).toString());
+        }
+        return defaultVal;
+    }
+
+    public static Long mapGetObjectForLong(Map<String, Object> obj, String param, Long defaultVal) {
+        if (obj != null && obj.containsKey(param) && obj.get(param) != null && !obj.get(param).equals("")) {
+            return Long.parseLong(obj.get(param).toString());
+        }
+        return defaultVal;
+    }
+
+    public static Date mapGetObjectForDate(Map<String, Object> obj, String param, String format) {
+        if (obj != null && obj.containsKey(param) && obj.get(param) != null && !obj.get(param).equals("")) {
+            SimpleDateFormat sdf;
+            if (format == null) {
+                sdf = new SimpleDateFormat(strDateFormat);
+            } else {
+                sdf = new SimpleDateFormat(format);
+            }
+            try {
+                return sdf.parse(obj.get(param).toString());
+            } catch (ParseException e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    public static BigDecimal mapGetObjectForBigDecimal(Map<String, Object> obj, String param, BigDecimal defaultVal) {
+        if (obj.containsKey(param) && obj.get(param) != null && !obj.get(param).equals("")) {
+            return new BigDecimal(obj.get(param).toString());
+        }
+
+        return defaultVal;
+    }
+
+    public static Double mapGetObjectForDouble(Map<String, Object> obj, String param, Double defaultVal) {
+        if (obj.containsKey(param) && obj.get(param) != null && !obj.get(param).equals("")) {
+            return new Double(obj.get(param).toString());
+        }
+
+        return defaultVal;
+    }
+
 }

@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import sun.invoke.util.VerifyType;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -249,9 +250,23 @@ public class SayisalImpl implements SayisalService {
 
         List<Sayisal> list = sayisalRepository.findAll(findByAndCriteria(sayisal));
 
+        List<Map<String,Object>> listData = new ArrayList<>();
+
+        for(int i=0;i<list.size();i++){
+            Map<String,Object> dataMap = new HashMap<String, Object>();
+
+            dataMap.put("birinciNumara",list.get(i).getBirinciNumara());
+            dataMap.put("ikinciNumara",list.get(i).getIkinciNumara());
+            dataMap.put("ucuncuNumara",list.get(i).getUcuncuNumara());
+            dataMap.put("dorduncuNumara",list.get(i).getDorduncuNumara());
+            dataMap.put("besinciNumara",list.get(i).getBesinciNumara());
+            dataMap.put("altinciNumara",list.get(i).getAltinciNumara());
+
+            listData.add(dataMap);
+        }
 
 
-        sendJson.put("data",list);
+        sendJson.put("data",listData);
         sendJson.put("success",true);
         return  sendJson;
     }
